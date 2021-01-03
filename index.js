@@ -4,6 +4,7 @@ const handle = require('express-handlebars');
 const homeRoutes = require('./routes/home');
 const addRoutes = require('./routes/add');
 const coursesRoutes = require('./routes/courses');
+const cardRoutes = require('./routes/card');
 
 // главный объект express
 const app = express();
@@ -24,14 +25,14 @@ app.set('view engine', 'hbs');
 app.set('views', 'views');
 
 // добавить папку статики
-app.use(express.static('styles'));
+app.use(express.static(path.join(__dirname, 'styles')));
 app.use(express.urlencoded({
     extended: true
 }));
 app.use('/' ,homeRoutes);
 app.use('/add', addRoutes);
 app.use('/courses', coursesRoutes);
-
+app.use('/card', cardRoutes);
 
 // передача порта в консоли или стандартный
 const PORT = process.env.PORT || 3000;

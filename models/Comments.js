@@ -3,9 +3,14 @@ const path = require('path');
 
 
 class Comments {
+    static dateNow() {
+        const currentDate = new Date();
+        return `   (${currentDate.getHours() < 10 ? '0' + currentDate.getHours() : currentDate.getHours()}:${currentDate.getMinutes() < 10 ? '0' + currentDate.getMinutes() : currentDate.getMinutes()}:${currentDate.getSeconds() < 10 ? '0' + currentDate.getSeconds() : currentDate.getSeconds()})`;
+    }
+
     static async save(data) {
         const comments = await Comments.getAll();
-        comments.push(data);
+        comments.push(data + Comments.dateNow());
         
         return new Promise((resolve, reject) => {
             fs.writeFile(
