@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-
 class Comments {
     static dateNow() {
         const currentDate = new Date();

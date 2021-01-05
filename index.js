@@ -1,18 +1,23 @@
 const express = require('express');
 const path = require('path');
-const handle = require('express-handlebars');
+const mongoose = require('mongoose');
+const Handlebars = require('handlebars')
+const expressHandlebars = require('express-handlebars');
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 const homeRoutes = require('./routes/home');
 const addRoutes = require('./routes/add');
 const coursesRoutes = require('./routes/courses');
 const cardRoutes = require('./routes/card');
 
+
 // главный объект express
 const app = express();
 
 // объект для создания слоёв
-const hbs = handle.create({
+const hbs = expressHandlebars.create({
     defaultLayout: 'main',
-    extname: 'hbs'
+    extname: 'hbs',
+    handlebars: allowInsecurePrototypeAccess(Handlebars)
 });
 
 // задать движок рендеринга html
@@ -37,10 +42,29 @@ app.use('/card', cardRoutes);
 // передача порта в консоли или стандартный
 const PORT = process.env.PORT || 3000;
 
-// начать прослушивание сервера по порту
-app.listen(PORT, () => {
-    console.log(`server is runing on port ${PORT}`);
-});
+// Данные базы данных
+const userName = 'admin';
+const password = 'nov6481';
+
+
+async function start() {
+    try {
+        
+        await mongoose.connect(`mongodb+srv://admin:1q2w3e4r5t6y@cluster0.bxmxh.mongodb.net/shop?retryWrites=true&w=majority`, 
+        {useNewUrlParser: true, 
+            useUnifiedTopology: true,
+            useFindAndModify: false
+        });
+        // начать прослушивание сервера по порту
+        app.listen(PORT, () => {
+        console.log(`server is runing on port ${PORT}`);
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+start();
 
 
 // get запросы html страниц
