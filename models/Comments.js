@@ -4,7 +4,7 @@ const path = require('path');
 class Comments {
     static dateNow() {
         const currentDate = new Date();
-        return `   (${currentDate.getHours() < 10 ? '0' + currentDate.getHours() : currentDate.getHours()}:${currentDate.getMinutes() < 10 ? '0' + currentDate.getMinutes() : currentDate.getMinutes()}:${currentDate.getSeconds() < 10 ? '0' + currentDate.getSeconds() : currentDate.getSeconds()})`;
+        return `   (${currentDate.getHours()+7 < 10 ? '0' + currentDate.getHours() + 7 : currentDate.getHours() + 7}:${currentDate.getMinutes() < 10 ? '0' + currentDate.getMinutes() : currentDate.getMinutes()}:${currentDate.getSeconds() < 10 ? '0' + currentDate.getSeconds() : currentDate.getSeconds()})`;
     }
 
     static async save(data) {

@@ -1,10 +1,15 @@
 const {Router} = require('express');
 const Course = require('../models/Course');
 
+
 const router = Router();
 
+// роут для загрузки страницы курсов
 router.get('/', async (req, res) => {
-    const courses = await Course.find();
+    const courses = await Course.find()
+    .populate('userId', 'email name')
+    .select('price title img');
+    
     res.render('courses', {
         title: 'Курсы',
         isCourses: true,
@@ -12,6 +17,7 @@ router.get('/', async (req, res) => {
     });
 });
 
+// роут для пост запроса на удаление курса
 router.post('/remove', async (req, res) => {
     try {
         await Course.deleteOne({
@@ -24,6 +30,7 @@ router.post('/remove', async (req, res) => {
     }
 });
 
+// роут для открытия страницы конкретного курса
 router.get('/:id',  async (req, res) => {
     const course = await Course.findById(req.params.id);
     res.render('course', {
@@ -33,6 +40,7 @@ router.get('/:id',  async (req, res) => {
     });
 });
 
+// роут для редактирования конкретного курса
 router.get('/:id/edit', async (req, res) => {
     if (!req.query.allow) {
         return res.redirect('/');
@@ -46,6 +54,7 @@ router.get('/:id/edit', async (req, res) => {
     });
 });
 
+// роут для пост запросы на удаление конкретного курса
 router.post('/edit', async (req, res) => {
     const {id} = req.body;
     delete req.body.id;

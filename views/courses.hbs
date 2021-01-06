@@ -1,11 +1,10 @@
 <div class="row center">
-    <h1 class="col s6 offset-s3">Курсы</h1>
+    <h3 class="col s6 offset-s3">Доступные товары</h3>
 </div>
 
 {{#if courses.length}}
+<div class="flex">
 {{#each courses}}
-<div class="row">
-    <div class="col s6 offset-s3">
         <div class="card">
             <div class="card-image">
                 <img src="{{img}}" alt="{{title}}">
@@ -23,9 +22,10 @@
                 </form>
             </div>
         </div>
-    </div>
-</div>
+
+
 {{/each}}
+</div>
 {{else}}
 <p>Курсов пока нет...</p>
 {{/if}}
