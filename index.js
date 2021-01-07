@@ -9,7 +9,7 @@ const addRoutes = require('./routes/add');
 const coursesRoutes = require('./routes/courses');
 const cardRoutes = require('./routes/card');
 const User = require('./models/User');
-
+const ordersRoutes = require('./routes/orders');
 
 // главный объект express
 const app = express();
@@ -37,7 +37,6 @@ app.use(async (req, res, next) => {
         next();
     } catch (e) {
         console.log(e);
-        
     }
 });
 
@@ -46,6 +45,8 @@ app.use(express.static(path.join(__dirname, 'styles')));
 app.use(express.urlencoded({
     extended: true
 }));
+
+app.use('/orders', ordersRoutes);
 app.use('/' ,homeRoutes);
 app.use('/add', addRoutes);
 app.use('/courses', coursesRoutes);
