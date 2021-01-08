@@ -1,6 +1,6 @@
 <nav>
     <div class="nav-wrapper deep-purple lighten-1">
-        <a href="#" class="brand-logo">Магазин курсов</a>
+        <a href="/" class="brand-logo">Express Shop</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             {{#if isHome}}
                 <li class="active"><a href="/">Главная</a></li>
@@ -9,11 +9,12 @@
             {{/if}}
 
             {{#if isCourses}}
-                <li class="active"><a href="/courses">Курсы</a></li>
+                <li class="active"><a href="/courses">Магазин</a></li>
             {{else}}
-                <li><a href="/courses">Курсы</a></li>
+                <li><a href="/courses">Магазин</a></li>
             {{/if}}
 
+            {{#if isAuth}}
             {{#if isAdd}}
                 <li class="active"><a href="/add">Добавить курс</a></li>
             {{else}}
@@ -31,7 +32,14 @@
             {{else}}
                 <li><a href="/orders">Заказы</a></li>
             {{/if}}
-            
+            <li><a href="/auth/logout">Выход</a></li>
+            {{else}}
+            {{#if isLogin}}
+                <li class="active"><a href="/auth/login">Вход</a></li>
+            {{else}}
+                <li><a href="/auth/login">Вход</a></li> 
+            {{/if}}
+            {{/if}}
         </ul>
     </div>
 </nav>

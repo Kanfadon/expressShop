@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const User = require('../models/User');
 
 class Comments {
     static dateNow() {
@@ -7,10 +8,10 @@ class Comments {
         return `   (${currentDate.getHours() + 6 < 10 ? '0' + currentDate.getHours() + 6 : currentDate.getHours() + 6}:${currentDate.getMinutes() < 10 ? '0' + currentDate.getMinutes() : currentDate.getMinutes()}:${currentDate.getSeconds() < 10 ? '0' + currentDate.getSeconds() : currentDate.getSeconds()})`;
     }
 
-    static async save(data) {
+    static async save(data, userName) {
         const comments = await Comments.getAll();
-        comments.push(data + Comments.dateNow());
-        
+        await comments.push(userName + ': ' + data + Comments.dateNow());
+
         return new Promise((resolve, reject) => {
             fs.writeFile(
                 path.join(__dirname, '..', 'data', 'Comments.json'),

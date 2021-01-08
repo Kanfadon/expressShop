@@ -21,7 +21,12 @@ router.get('/', async (req, res) => {
 
 // роут для пост запроса на отправку сообщения
 router.post('/send-message', async (req, res) => {
-    const comment = await Comments.save(req.body.message);
+    if (req.session.isAuthenticated) {
+        const comment = await Comments.save(req.body.message, req.session.user.name);
+    } else {
+        const comment = await Comments.save(req.body.message, 'анон');
+    }
+    
     res.redirect('/');
 });
 

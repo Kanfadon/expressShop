@@ -2,12 +2,13 @@ const {
     Router
 } = require('express');
 const Order = require('../models/Order');
+const auth = require('../middleware/auth');
 
 
 const router = Router();
 
 // Вывод страницы заказов
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const orders = await Order.find({
                 'user.userId': req.user._id
@@ -32,7 +33,7 @@ router.get('/', async (req, res) => {
 });
 
 // Отправка пост запроса на оформление заказа
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
         // поулучаем все товары в массив
         const user = await req.user
